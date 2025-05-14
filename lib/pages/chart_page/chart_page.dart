@@ -37,8 +37,11 @@ class _ChartPageState extends State<ChartPage> {
         prices = result;
         isLoading = false;
       });
-    } catch (_) {
-      setState(() => isLoading = false);
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+        isLoading = false;
+      });
     }
   }
 

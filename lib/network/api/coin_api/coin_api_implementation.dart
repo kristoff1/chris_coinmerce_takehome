@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:test_coinmerce/network/exceptions/server_error_exception.dart';
 
 import '../../adapter/network.dart';
 import '../../exceptions/under_maintenance_exception.dart';
@@ -31,6 +32,8 @@ class CoinApiImplementation extends CoinApi {
       // You can check status codes in your adapter or inside helper methods
       if (e is UnderMaintenanceException) {
         rethrow;
+      } else if (e is ServerErrorException) {
+        rethrow;
       }
       throw Exception('Unknown Exception');
     }
@@ -55,6 +58,8 @@ class CoinApiImplementation extends CoinApi {
     } catch (e) {
       // You can check status codes in your adapter or inside helper methods
       if (e is UnderMaintenanceException) {
+        rethrow;
+      } else if (e is ServerErrorException) {
         rethrow;
       }
       throw Exception('Unknown Exception');
@@ -82,7 +87,6 @@ class CoinApiImplementation extends CoinApi {
       } else if (_getError500(response)) {
         throw UnderMaintenanceException('Error Connecting to Server');
       }
-
       final decoded = jsonDecode(response.body) as List<dynamic>;
       return decoded.map((e) => Map<String, dynamic>.from(e as Map)).toList();
     } catch (e) {
