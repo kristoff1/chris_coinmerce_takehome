@@ -4,4 +4,6 @@ abstract class CoinRepositoryContract {
 
   Future<List<CoinData>> getCoins();
 
+  Future<List<double>> getChart(String coinId);
+
 }

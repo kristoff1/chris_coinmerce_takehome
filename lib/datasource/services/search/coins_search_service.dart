@@ -17,4 +17,10 @@ class CoinSearchService extends CoinSearchServiceContract {
     return coins;
   }
 
+  @override
+  Future<List<double>> getChart(String coinId) async {
+    List<double> chart = await coinRepository.getChart(coinId);
+    return chart;
+  }
+
 }

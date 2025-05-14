@@ -22,6 +22,12 @@ class CoinParserImplementation extends CoinParser {
     }
   }
 
+  @override
+  List<double> getChartFromJson(Map<String, dynamic> json) {
+    final prices = json['prices'] as List<dynamic>;
+    return prices.map((item) => (item as List)[1] as double).toList();
+  }
+
   ///To handle the case when the result is an int
   double _parseNumberResult(var element) {
     if(element is int) {

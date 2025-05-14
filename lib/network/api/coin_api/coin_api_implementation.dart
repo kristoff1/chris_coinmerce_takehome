@@ -36,6 +36,31 @@ class CoinApiImplementation extends CoinApi {
     }
   }
 
+  @override
+  Future<Map<String, dynamic>> getChart(String coinId) async {
+    try {
+      http.Response response = await adapter.get(
+        path: 'api/v3/coins/$coinId/market_chart',
+        queryParams: {
+          'vs_currency': 'usd',
+          'days': '1',
+        },
+        headers: {
+          'accept': 'application/json',
+        },
+      );
+      return _convertResponseToJSON(response);
+    } on http.ClientException {
+      throw Exception('Network Exception');
+    } catch (e) {
+      // You can check status codes in your adapter or inside helper methods
+      if (e is UnderMaintenanceException) {
+        rethrow;
+      }
+      throw Exception('Unknown Exception');
+    }
+  }
+
   bool _getError500(http.Response response) {
     return response.statusCode >= 500 && response.statusCode < 600;
   }
@@ -64,4 +89,21 @@ class CoinApiImplementation extends CoinApi {
       throw Exception('Invalid JSON or Server Error');
     }
   }
+
+  Map<String, dynamic> _convertResponseToJSON(
+    http.Response response,
+  ) {
+    try {
+      if (response.statusCode == 503) {
+        throw UnderMaintenanceException('Under Maintenance');
+      } else if (_getError500(response)) {
+        throw UnderMaintenanceException('Error Connecting to Server');
+      }
+
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } catch (e) {
+      throw Exception('Invalid JSON or Server Error');
+    }
+  }
+
 }

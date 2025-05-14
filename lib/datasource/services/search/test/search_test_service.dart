@@ -1,6 +1,7 @@
 import 'package:test_coinmerce/datasource/data/coin/coin_data.dart';
 import 'package:test_coinmerce/datasource/services/search/coins_search_service_contract.dart';
 
+///Only for testing purposes without any API
 class CoinSearchTestService extends CoinSearchServiceContract {
   @override
   Future<List<CoinData>> getCoins() {
@@ -22,6 +23,12 @@ class CoinSearchTestService extends CoinSearchServiceContract {
         priceChangePercentage24h: 3.0,
       ),
     ]);
+  }
+
+  @override
+  Future<List<double>> getChart(String coinId) {
+
+    throw UnimplementedError();
   }
 
 }

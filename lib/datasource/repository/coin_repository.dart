@@ -23,4 +23,14 @@ class CoinRepository extends CoinRepositoryContract {
     }
   }
 
+  @override
+  Future<List<double>> getChart(String coinId) async {
+    try {
+      Map<String, dynamic> results = await coinApi.getChart(coinId);
+      return coinParser.getChartFromJson(results);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
 }
