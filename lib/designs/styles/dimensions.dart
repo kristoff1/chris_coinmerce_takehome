@@ -1,0 +1,1 @@
+const double cardListHeight = 120;
