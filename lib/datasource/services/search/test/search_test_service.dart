@@ -27,8 +27,7 @@ class CoinSearchTestService extends CoinSearchServiceContract {
 
   @override
   Future<List<double>> getChart(String coinId) {
-
-    throw UnimplementedError();
+    return Future.value([1.0, 2.0, 3.0, 4.0, 5.0]);
   }
 
 }
