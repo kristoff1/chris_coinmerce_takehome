@@ -1,4 +1,4 @@
-# 📱 Flutter App Project
+# 📱 Coin List App
 
 A cross-platform Flutter application that displays a list of coins and their current prices using CoinGecko API.
 
